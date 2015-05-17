@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8"> 
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+	<title>HAWARY</title>
+	
+	<link href='http://fonts.googleapis.com/css?family=Bowlby+One+SC' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="css/normalize.css" type="text/css">
+	<link rel="stylesheet" href="css/style.css" type="text/css">
+	<link rel="author" href="https://plus.google.com/107766061849006545830"/>
+	
+	<script src="js/jquery-1.9.1.min.js"></script>
+	<script src="js/jquery.lettering-0.6.1.min.js"></script>
+	<script src="js/jquery.scrollorama.js"></script>
+</head>
+<body>	 
+	<p id="console"></p>
+
+	<div class="scrollblock" id="intro">
+		<h1 id="title">LUY_CHUNG_LUIS_ARTURO</h1>
+		<p id="author" style="display:none">
+			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+		</p>
+		<p id="desc">UBICACIÓN: MALECÓN DE LA RESERVA / LOCAL N°403<br />
+		</p>
+	</div>
+	<div class="scrollblock" id="examples-transition">
+		<h2>NÚMERO: 610</h2>
+		<h3 id="fade-in">MANZANA: 761</h3>
+		<h3 id="fly-in">URBANIZACIÓN</h3>
+		<h3 id="rotate-in">LOTE: 3</h3>
+		<h3 id="zoom-in">USO: TERRENO</h3>
+		<p id="any"><small><span class="accent">&#9733;</span>AÑO DE RESOLUCIÓN: 2013<span class="accent"></span></small></p>
+	</div>
+	
+	<div class="scrollblock" id="examples-pin">
+		<h2>FECHA DE CREACIÓN: 4/2/13</h2>
+		<h3 id="unpin">&#9733; AÑO DE EXPEDIENTE. 2007&#9733;</h3>
+	</div>
+	
+	<div class="scrollblock" id="examples-parallax">
+		<h2 id="parallax1">RESOLUCIÓN</h2>
+		<h3 id="parallax2">-309-2013</h3>
+		<h3 id="parallax3">RESO-</h3>
+	</div>
+	
+	
+
+	<div class="scrollblock" id="credits">
+		<h1>Créditos</h1>
+		<p>Desarrollado por:</p>
+		<ul>
+			<li><a href="https://github.com/mokuzaru">Kenny Otoya<a></li>
+			<li><a href="https://github.com/victorocs">Victor Casas<a></li>
+			<li><a href="https://github.com/veintidos">Juan Ñahui<a></li>
+		</ul>
+		<p><a href= "http://datosabiertos.miraflores.gob.pe/home/">Bases de datos</a> de <a href="http://www.miraflores.gob.pe/">Municipalidad de Miraflores.</a></p>
+		
+		<p class="divider">&#9733; &#9733; &#9733;</p>
+		<p><small>Si te gustó,<a href=""> aqui tienes el repo en git, </a> mejoralo.</small></p>
+	</div>
+	
+	<script>
+		$(document).ready(function() {
+			
+			// initialize the plugin, pass in the class selector for the sections of content (blocks)
+			var scrollorama = $.scrollorama({ blocks:'.scrollblock' });
+			
+			// assign function to add behavior for onBlockChange event
+			scrollorama.onBlockChange(function() {
+				$('#console')
+					.css('display','block')
+					.text('');
+			});
+			
+			// lettering.js for coolness
+			$('#title').lettering();
+			$('#title span')
+				.css('display','block')
+				.css('float','left');
+			$('.char9').css('padding-left','6px');
+			
+			// animate the title letters to explode
+			scrollorama
+				.animate('#title',{ duration: 300, property:'zoom', end: 8 })
+				.animate('#author',{ duration: 10, property:'z-index', end: 0 });
+			
+			$('#title span').each(function() {
+				scrollorama
+					.animate($(this),{ duration: 400, property:'top', end: Math.random()*120-180 })
+					.animate($(this),{ duration: 300, property:'rotate', start:0, end:Math.random()*720-360 });
+			});
+			
+			// animate some examples
+			scrollorama
+				.animate('#unpin',{ duration:500, property:'padding-top', start:400, pin:true })
+				.animate('#fade-in',{ delay: 400, duration: 300, property:'opacity', start:0 })
+				.animate('#fly-in',{ delay: 400, duration: 300, property:'left', start:-1400, end:0 })
+				.animate('#rotate-in',{ duration: 800, property:'rotate', start:720 })
+				.animate('#zoom-in',{ delay: 200, duration: 600, property:'zoom', start:8 })
+				.animate('#any',{ delay: 700, duration: 200, property:'opacity', start:0 })
+				.animate('#any',{ delay: 800, duration: 200, property:'letter-spacing', start:18 });
+			
+			// animate the parallaxing
+			scrollorama
+				.animate('#parallax2',{ delay: 400, duration: 600, property:'top', start:800, end:-800 })
+				.animate('#parallax3',{ delay: 200, duration: 1200, property:'top', start:500, end:-500 });
+			
+			// animate some easing examples
+			var $easing = $('#easing'),
+				$clone = $easing.clone().appendTo('#examples-easing')
+								.css({position:'relative',top:'-2.95em'})
+								.lettering();
+			$easing.css({ color: '#131420', textShadow: '0 1px 0 #363959' });
+			easing_array = [	'easeOutBounce',
+								'easeOutQuad',
+								'easeOutCubic',
+								'easeOutQuart',
+								'easeOutQuint', 
+								'easeOutExpo' 		];
+			$clone.find('span')
+				.each( function( idx, el ){
+					scrollorama.animate( $(this), {	delay:400, duration: 500, 
+													property:'top', end: 300,
+													easing: easing_array[idx] });
+				})
+			
+		});
+	</script>
+
+	<script type="text/javascript">
+
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-2821890-9']);
+	  _gaq.push(['_trackPageview']);
+
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+
+	</script>
+
+</body></html>
